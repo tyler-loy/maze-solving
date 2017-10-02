@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\mazesolvinglib\mazesolvinglib.csproj" />
+    <ProjectReference Include="..\mazesolvinglib\mazesolvinglib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
