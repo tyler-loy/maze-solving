@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "mazesolving": {
+      "commandName": "Project",
+      "commandLineArgs": "./tiny.png"
+    }
+  }
+}
