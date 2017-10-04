@@ -2,11 +2,11 @@
 
 namespace mazesolvinglib.Utility
 {
-    public class Logger : ILogger
+    public class ConsoleLogger : ILogger
     {
         private readonly string _location;
 
-        public Logger(string location)
+        public ConsoleLogger(string location)
         {
             _location = location;
         }

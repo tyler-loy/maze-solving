@@ -4,7 +4,7 @@
     {
         public ILogger CreateLogger(string location)
         {
-            return new Logger(location);
+            return new ConsoleLogger(location);
         }
     }
 }

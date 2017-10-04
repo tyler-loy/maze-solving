@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using mazesolvinglib.Entities;
+using mazesolvinglib.Interfaces;
 
-namespace mazesolvinglib.Interfaces
+namespace mazesolvinglib.Default
 {
     public class DijkstraPathFinder : IPathFinder
     {

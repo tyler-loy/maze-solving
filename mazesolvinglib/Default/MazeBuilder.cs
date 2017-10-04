@@ -52,7 +52,7 @@ namespace mazesolvinglib.Default
 
             if (maze.EndNode.Equals(maze.StartNode))
             {
-                throw new Exception("WHAT THE FUCK WHY IS THE START THE SAME AS THE END");
+                throw new Exception("Why is the start of the maze the same as the end?");
             }
             _logger.Log($"Total Number of nodes {maze.Nodes.Count}");
             _logger.Log($"Total Number of node connections {maze.Connections.Count}");
