@@ -14,6 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="perfect2k.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="perfect4k.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="small.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="tiny.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

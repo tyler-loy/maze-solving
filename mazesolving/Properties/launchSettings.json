@@ -2,7 +2,7 @@
   "profiles": {
     "mazesolving": {
       "commandName": "Project",
-      "commandLineArgs": "./tiny.png"
+      "commandLineArgs": "./perfect2k.png"
     }
   }
 }

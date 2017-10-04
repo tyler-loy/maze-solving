@@ -32,11 +32,11 @@ namespace mazesolvinglib.Default
                 var path = pathFinder.Path(maze);
                 var pfEnd = DateTime.Now;
 
-                _logger.Log($"{pathFinder.Name} Time Taken: {(pfEnd - pfStart).ToString("g")}");
+                _logger.Log($"{pathFinder.Name} Finished Time Taken: {(pfEnd - pfStart).ToString("g")}");
 
                 if (path == null)
                 {
-                    _logger.Log($"{pathFinder} failed to find a path");
+                    _logger.Log($"{pathFinder.Name} failed to find a path");
                 }
                 else
                 {
@@ -45,7 +45,7 @@ namespace mazesolvinglib.Default
                 }
             }
 
-            throw new NotImplementedException();
+            return solution;
         }
     }
 }

@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using mazesolvinglib.Entities;
 using mazesolvinglib.Extentions;
 using mazesolvinglib.Interfaces;
@@ -12,6 +14,9 @@ namespace mazesolvinglib.Default
     public class MazeBuilder : IMazeBuilder
     {
         private ILogger _logger;
+
+        //todo move this
+        private Node[,] _nodes;
 
         public MazeBuilder(ILoggerFactory loggerFactory)
         {
@@ -28,6 +33,7 @@ namespace mazesolvinglib.Default
             maze.Height = image.Height;
             _logger.Log($"Total Number of cells {image.Width * image.Height}");
 
+            _nodes = new Node[maze.Height, maze.Width];
 
             for (int y = 0; y <= image.Height - 1; y++)
             {
@@ -35,7 +41,9 @@ namespace mazesolvinglib.Default
                 {
                     if (IsCellANode(image, x, y))
                     {
-                        maze.Nodes.Add(BuildNode(x, y));
+                        var builtNode = BuildNode(x, y);
+                        maze.Nodes.Add(builtNode);
+                        _nodes[y, x] = builtNode;
                     }
                 }
             }
@@ -171,7 +179,9 @@ namespace mazesolvinglib.Default
 
         public virtual Node GetNode(Maze maze, int x, int y)
         {
-            return maze.Nodes.FirstOrDefault(n => n.X == x && n.Y == y);
+            return _nodes[y, x];
+
+            //return maze.Nodes.Where(n1 => n1.Y == y).FirstOrDefault(n => n.X == x && n.Y == y);
         }
 
         public virtual Node BuildNode(int x, int y)
