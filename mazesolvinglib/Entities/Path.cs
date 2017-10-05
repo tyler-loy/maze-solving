@@ -6,7 +6,7 @@ namespace mazesolvinglib.Entities
 {
     public class Path
     {
-        public int TotalDistance { get; set; }
+        public long TotalDistance { get; set; }
         public string PathFinderName { get; set; }
         public List<PathNode> PathNodes { get; set; }
     }
@@ -15,6 +15,6 @@ namespace mazesolvinglib.Entities
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public int DistanceFromStart { get; set; }
+        public long DistanceFromStart { get; set; }
     }
 }

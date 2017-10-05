@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
+    <PackageReference Include="OptimizedPriorityQueue" Version="4.1.1" />
     <PackageReference Include="StructureMap" Version="4.5.2" />
     <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
   </ItemGroup>
