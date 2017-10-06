@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using mazesolvinglib.Entities;
-using mazesolvinglib.Extentions;
 using mazesolvinglib.Interfaces;
 using mazesolvinglib.Utility;
 
@@ -23,7 +19,7 @@ namespace mazesolvinglib.Default
             _logger = loggerFactory.CreateLogger("Maze Builder");
         }
 
-        public Maze Build(Bitmap image)
+        public Maze Build(SourceImage image)
         {
             var mazeBuildStart = DateTime.Now;
             Maze maze = new Maze();
@@ -70,12 +66,12 @@ namespace mazesolvinglib.Default
             return maze;
         }
 
-        public virtual List<NodeConnection> BuildNodeConnections(Node node, Maze maze, Bitmap image)
+        public virtual List<NodeConnection> BuildNodeConnections(Node node, Maze maze, SourceImage image)
         {
             List<NodeConnection> nodeConnections = new List<NodeConnection>();
             for (int y = node.Y; y < maze.Height - 1; y++)
             {
-                if (GetCellType(image.GetPixel(node.X, y)) != CellType.Pathable)
+                if (image.GetCell(node.X, y) != CellType.Pathable)
                 {
                     break;
                 }
@@ -96,7 +92,7 @@ namespace mazesolvinglib.Default
 
             for (int y = node.Y; y >= 0; y--)
             {
-                if (GetCellType(image.GetPixel(node.X, y)) != CellType.Pathable)
+                if (image.GetCell(node.X, y) != CellType.Pathable)
                 {
                     break;
                 }
@@ -117,7 +113,7 @@ namespace mazesolvinglib.Default
 
             for (int x = node.X; x < maze.Width - 1; x++)
             {
-                if (GetCellType(image.GetPixel(x, node.Y)) != CellType.Pathable)
+                if (image.GetCell(x, node.Y) != CellType.Pathable)
                 {
                     break;
                 }
@@ -137,7 +133,7 @@ namespace mazesolvinglib.Default
 
             for (int x = node.X; x >= 0; x--)
             {
-                if (GetCellType(image.GetPixel(x, node.Y)) != CellType.Pathable)
+                if (image.GetCell(x, node.Y) != CellType.Pathable)
                 {
                     break;
                 }
@@ -180,8 +176,6 @@ namespace mazesolvinglib.Default
         public virtual Node GetNode(Maze maze, int x, int y)
         {
             return _nodes[y, x];
-
-            //return maze.Nodes.Where(n1 => n1.Y == y).FirstOrDefault(n => n.X == x && n.Y == y);
         }
 
         public virtual Node BuildNode(int x, int y)
@@ -196,22 +190,9 @@ namespace mazesolvinglib.Default
             return node;
         }
 
-        public virtual CellType GetCellType(Color pixel)
+        public virtual bool IsCellANode(SourceImage image, int x, int y)
         {
-            switch (pixel.GetHexCode())
-            {
-                case "#FF000000":
-                    return CellType.Wall;
-                case "#FFFFFFFF":
-                    return CellType.Pathable;
-                default:
-                    return CellType.Unkown;
-            }
-        }
-
-        public virtual bool IsCellANode(Bitmap image, int x, int y)
-        {
-            if (GetCellType(image.GetPixel(x, y)) != CellType.Pathable)
+            if (image.GetCell(x, y) != CellType.Pathable)
             {
                 return false;
             }
@@ -224,10 +205,10 @@ namespace mazesolvinglib.Default
                 return true;
             }
 
-            var north = GetCellType(image.GetPixel(x, y - 1));
-            var east = GetCellType(image.GetPixel(x + 1, y));
-            var west = GetCellType(image.GetPixel(x - 1, y));
-            var south = GetCellType(image.GetPixel(x, y + 1));
+            var north = image.GetCell(x, y - 1);
+            var east = image.GetCell(x + 1, y);
+            var west = image.GetCell(x - 1, y);
+            var south = image.GetCell(x, y + 1);
 
 
             if ((east == CellType.Pathable && south == CellType.Pathable) || 

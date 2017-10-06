@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using mazesolvinglib.Entities;
+﻿using mazesolvinglib.Entities;
 
 namespace mazesolvinglib.Interfaces
 {

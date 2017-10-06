@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using mazesolvinglib.Entities;
 
 namespace mazesolvinglib.Interfaces
 {
     public interface IImageLoader
     {
-        Bitmap LoadImage(string path);
+        SourceImage LoadImage(string path);
     }
 }
