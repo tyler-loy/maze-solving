@@ -11,7 +11,7 @@ namespace mazesolvinglib.Default
 
         public ImageLoader(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger("Image Load");
+            _logger = loggerFactory.CreateLogger("Image Loader");
         }
 
         public Bitmap LoadImage(string path)

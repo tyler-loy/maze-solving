@@ -20,7 +20,7 @@ namespace mazesolvinglib.Default
 
         public MazeBuilder(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger("Maze Build");
+            _logger = loggerFactory.CreateLogger("Maze Builder");
         }
 
         public Maze Build(Bitmap image)

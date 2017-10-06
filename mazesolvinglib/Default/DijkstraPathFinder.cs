@@ -78,7 +78,7 @@ namespace mazesolvinglib.Default
                 }
             }
 
-            var pathNodes = GetPathNodes(dijkstraQueueItems[maze.EndNode.Y, maze.EndNode.X], dijkstraQueueItems, maze);
+            var pathNodes = GetPathNodes(dijkstraQueueItems[maze.EndNode.Y, maze.EndNode.X], dijkstraQueueItems);
             
             return new Path
             {
@@ -88,7 +88,7 @@ namespace mazesolvinglib.Default
             };
         }
 
-        private List<PathNode> GetPathNodes(DijkstraQueueItem dijkstraQueueItem, DijkstraQueueItem[,] dijkstraQueue, Maze maze)
+        private List<PathNode> GetPathNodes(DijkstraQueueItem dijkstraQueueItem, DijkstraQueueItem[,] dijkstraQueue)
         {
             Stack<DijkstraQueueItem> dijkstraStack = new Stack<DijkstraQueueItem>();
             List<PathNode> pathNodes = new List<PathNode>();
@@ -113,11 +113,6 @@ namespace mazesolvinglib.Default
             }
 
             return pathNodes;
-        }
-
-        private bool FoundPath(List<DijkstraQueueItem> dijkstraQueueDone, Maze maze)
-        {
-            return dijkstraQueueDone.Any(x => maze.EndNode.Equals(x.Node) && x.Weight < long.MaxValue);
         }
 
         private class DijkstraQueueItem
