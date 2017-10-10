@@ -13,6 +13,7 @@ namespace mazesolvinglib.Default
         public Path Path(Maze maze)
         {
             SimplePriorityQueue<DijkstraQueueItem, long> dijkstraQueue = new SimplePriorityQueue<DijkstraQueueItem, long>();
+            
             DijkstraQueueItem[,] dijkstraQueueItems = new DijkstraQueueItem[maze.Width,maze.Height];
 
             foreach (var mazeNode in maze.Nodes)
@@ -26,7 +27,7 @@ namespace mazesolvinglib.Default
                     };
 
                     dijkstraQueue.Enqueue(item, 0);
-                    dijkstraQueueItems[mazeNode.Y, mazeNode.X] = item;
+                    dijkstraQueueItems[mazeNode.X, mazeNode.Y] = item;
                 }
                 else
                 {
@@ -37,7 +38,7 @@ namespace mazesolvinglib.Default
                     };
 
                     dijkstraQueue.Enqueue(item, long.MaxValue);
-                    dijkstraQueueItems[mazeNode.Y, mazeNode.X] = item;
+                    dijkstraQueueItems[mazeNode.X,mazeNode.Y] = item;
                 }
             }
 
@@ -57,7 +58,7 @@ namespace mazesolvinglib.Default
 
                     var notMe = next.Node.Equals(nodeConnection.NodeA) ? nodeConnection.NodeB : nodeConnection.NodeA;
 
-                    var notMyQueueItem = dijkstraQueueItems[notMe.Y, notMe.X];
+                    var notMyQueueItem = dijkstraQueueItems[notMe.X, notMe.Y];
 
                     if (notMyQueueItem.Weight > currentDistance)
                     {
@@ -77,38 +78,41 @@ namespace mazesolvinglib.Default
                 }
             }
 
-            var pathNodes = GetPathNodes(dijkstraQueueItems[maze.EndNode.Y, maze.EndNode.X], dijkstraQueueItems);
+            var pathNodes = GetPathNodes(dijkstraQueueItems[maze.EndNode.X, maze.EndNode.Y], dijkstraQueueItems);
             
             return new Path
             {
                 PathNodes = pathNodes,
-                TotalDistance = pathNodes.Last().DistanceFromStart,
+                TotalDistance = pathNodes.First().DistanceFromStart,
                 PathFinderName = Name
             };
         }
 
         private List<PathNode> GetPathNodes(DijkstraQueueItem dijkstraQueueItem, DijkstraQueueItem[,] dijkstraQueue)
         {
-            Stack<DijkstraQueueItem> dijkstraStack = new Stack<DijkstraQueueItem>();
             List<PathNode> pathNodes = new List<PathNode>();
 
             var currentItem = dijkstraQueueItem;
 
             while (currentItem.ViaNode != null)
             {
-                dijkstraStack.Push(currentItem);
-                currentItem = dijkstraQueue[currentItem.ViaNode.Y, currentItem.ViaNode.X];
-            }
-
-            while (dijkstraStack.Count > 0)
-            {
-                var next = dijkstraStack.Pop();
                 pathNodes.Add(new PathNode
                 {
-                    X = next.Node.X,
-                    Y = next.Node.Y,
-                    DistanceFromStart = next.Weight
+                    X = currentItem.Node.X,
+                    Y = currentItem.Node.Y,
+                    DistanceFromStart = currentItem.Weight
                 });
+                currentItem = dijkstraQueue[currentItem.ViaNode.X, currentItem.ViaNode.Y];
+
+                if (currentItem.ViaNode == null)
+                {
+                    pathNodes.Add(new PathNode
+                    {
+                        X = currentItem.Node.X,
+                        Y = currentItem.Node.Y,
+                        DistanceFromStart = currentItem.Weight
+                    });
+                }
             }
 
             return pathNodes;

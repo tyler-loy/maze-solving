@@ -16,15 +16,14 @@ namespace mazesolvinglib.Default
             _logger = loggerFactory.CreateLogger("Image Loader");
         }
 
-        public SourceImage LoadImage(string path)
+        public SourceImage LoadImage(FileInfo fileInfo)
         {
-
             var loadStart = DateTime.Now;
             SourceImage sourceImage;
-            using (FileStream stream = File.OpenRead(path))
+            using (FileStream stream = File.OpenRead(fileInfo.FullName))
             using (Image<Rgba32> image = Image.Load<Rgba32>(stream))
             {
-                sourceImage = BuildSourceImage(image);
+                sourceImage = BuildSourceImage(image, fileInfo);
             }
 
             var loadEnd = DateTime.Now;
@@ -32,11 +31,12 @@ namespace mazesolvinglib.Default
             return sourceImage;
         }
 
-        public virtual SourceImage BuildSourceImage(Image<Rgba32> image)
+        public virtual SourceImage BuildSourceImage(Image<Rgba32> image, FileInfo fileInfo)
         {
             SourceImage sourceImage = new SourceImage();
             sourceImage.Source = image.Clone();
             sourceImage.Cells = GetCellTypes(image);
+            sourceImage.FileName = fileInfo.Name;
             return sourceImage;
         }
 

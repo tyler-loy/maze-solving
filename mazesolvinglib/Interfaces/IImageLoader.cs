@@ -1,9 +1,10 @@
-﻿using mazesolvinglib.Entities;
+﻿using System.IO;
+using mazesolvinglib.Entities;
 
 namespace mazesolvinglib.Interfaces
 {
     public interface IImageLoader
     {
-        SourceImage LoadImage(string path);
+        SourceImage LoadImage(FileInfo path);
     }
 }

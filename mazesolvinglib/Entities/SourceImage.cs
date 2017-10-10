@@ -8,6 +8,7 @@ namespace mazesolvinglib.Entities
         public CellType[,] Cells { get; set; }
         public int Width => Source.Width;
         public int Height => Source.Height;
+        public string FileName { get; set; }
 
         public CellType GetCell(int x, int y)
         {
